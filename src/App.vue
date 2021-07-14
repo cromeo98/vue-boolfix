@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header @research="researchMovieOrTv"/>
-    <Main/>
+    <Main :searchedMovies="searchedMovies"/>
   </div>
 </template>
 
@@ -21,7 +21,8 @@ export default {
     return {
       apiUrl: "https://api.themoviedb.org/3/search/movie",
       apiKey: "d2e20f2e9286826809356fcd801cdf54",
-      language: "it-IT"
+      language: "it-IT",
+      searchedMovies: []
     }
   },
   methods: {
@@ -35,7 +36,7 @@ export default {
           }
         })
         .then( response => {
-          console.log(response);
+          this.searchedMovies = response.data.results;
         })
     }
   }

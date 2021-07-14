@@ -4,13 +4,13 @@
       <div class="search-movie-serie-tv">
 
       </div>
-      <Card v-for="searchedMovie in searchedMovies" :key="searchedMovie.id"/>
+      <Card v-for="searchedMovie in searchedMovies" :key="searchedMovie.id" :movieDetails="searchedMovie"/>
     </div>
   </main>
 </template>
 
 <script>
-import Card from '@/components/card.vue'
+import Card from '@/components/Card.vue'
 
 export default {
   name: "Main",

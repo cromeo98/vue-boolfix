@@ -7,7 +7,7 @@
           <li>Titolo: {{details.title || details.name}}</li>       
           <!-- OR <li>Titolo: {{!details.title ? details.name : details.title}}</li>  -->
           <li>Titolo originale: {{details.original_title || details.original_name}}</li>
-          <li>Voto: {{details.vote_average}}</li>
+          <li>Voto: {{changeVoteInOneToFive(details.vote_average)}}</li>
           <li v-if="!flags.includes(details.original_language)">
               Lingua: {{details.original_language}}
           </li>
@@ -33,7 +33,9 @@ export default {
         }
     },
     methods: {
-        
+        changeVoteInOneToFive(data){
+            return data / 2;
+        }
     },
     props: {
         details: Object

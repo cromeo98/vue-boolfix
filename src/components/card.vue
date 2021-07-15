@@ -34,7 +34,8 @@ export default {
     },
     methods: {
         changeVoteInOneToFive(data){
-            return data / 2;
+            let oneToFive = data / 2;
+            return oneToFive.toFixed(0);
         }
     },
     props: {

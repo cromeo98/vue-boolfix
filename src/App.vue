@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header @research="researchMovieOrTv"/>
-    <Main :searchedMovies="searchedMovies"/>
+    <Main :searchedMovies="searchedMovies" :searchedTvSeries="searchedTvSeries" :searched="youSearched"/>
   </div>
 </template>
 
@@ -19,25 +19,34 @@ export default {
   },
   data () {
     return {
-      apiUrl: "https://api.themoviedb.org/3/search/movie",
+      movieUrl: "https://api.themoviedb.org/3/search/movie",
+      tvSeriesUrl: "https://api.themoviedb.org/3/search/tv",
       apiKey: "d2e20f2e9286826809356fcd801cdf54",
       language: "it-IT",
-      searchedMovies: []
+      searchedMovies: [],
+      searchedTvSeries: [],
+      youSearched: ''
     }
   },
   methods: {
     researchMovieOrTv(input){
-      axios
-        .get(this.apiUrl, {
+      this.youSearched = input
+      const request = {
           params:{
             api_key: this.apiKey,
             language: this.language,
             query: input
           }
-        })
-        .then( response => {
-          this.searchedMovies = response.data.results;
-        })
+      }
+      axios
+        .all([
+          axios.get(this.movieUrl, request),
+          axios.get(this.tvSeriesUrl, request)
+        ])
+        .then(axios.spread((responseMovie, responseTvSeries) => {
+          this.searchedMovies = responseMovie.data.results;
+          this.searchedTvSeries = responseTvSeries.data.results;
+        }))
     }
   }
 }
